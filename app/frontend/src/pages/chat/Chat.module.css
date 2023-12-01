@@ -2,7 +2,13 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
+    margin-top: 16px;
+    padding-top: 0px;
+}
+
+.chatOutputContainer {
+    padding-left: 24px;
+    padding-right: 24px;
 }
 
 .chatRoot {
@@ -24,7 +30,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-height: 1024px;
     padding-top: 60px;
 }
 
@@ -53,10 +58,9 @@
 
 .chatMessageStream {
     flex-grow: 1;
-    max-height: 1024px;
     max-width: 1028px;
     width: 100%;
-    overflow-y: auto;
+    overflow: scroll;
     padding-left: 24px;
     padding-right: 24px;
     display: flex;
@@ -65,9 +69,9 @@
 
 .chatMessageGpt {
     margin-bottom: 20px;
-    max-width: 80%;
+    max-width: 90%;
     display: flex;
-    min-width: 500px;
+    min-width: 300px;
 }
 
 .chatMessageGptMinWidth {
@@ -112,4 +116,20 @@
 .commandButton {
     margin-right: 20px;
     margin-bottom: 20px;
+}
+
+.questionInputContainer {
+    border-radius: 8px;
+    box-shadow:
+        0px 8px 16px rgba(0, 0, 0, 0.14),
+        0px 0px 2px rgba(0, 0, 0, 0.12);
+    height: 220px;
+    width: 100%;
+    padding: 15px;
+    background: white;
+}
+
+.questionInputTextArea {
+    width: 100%;
+    line-height: 40px;
 }

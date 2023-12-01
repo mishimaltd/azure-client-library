@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Stack, TextField } from "@fluentui/react";
-import { Send28Filled } from "@fluentui/react-icons";
+import { Send24Filled } from "@fluentui/react-icons";
 
 import styles from "./QuestionInput.module.css";
 
@@ -54,6 +54,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend }: Pr
                 value={question}
                 onChange={onQuestionChange}
                 onKeyDown={onEnterPress}
+                inputClassName={styles.questionInputStyle}
             />
             <div className={styles.questionInputButtonsContainer}>
                 <div
@@ -61,7 +62,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend }: Pr
                     aria-label="Ask question button"
                     onClick={sendQuestion}
                 >
-                    <Send28Filled primaryFill="rgba(115, 118, 225, 1)" />
+                    <Send24Filled primaryFill="rgba(115, 118, 225, 1)" />
                 </div>
             </div>
         </Stack>

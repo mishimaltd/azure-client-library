@@ -33,6 +33,7 @@ export type AskResponse = {
     answer: string;
     thoughts: string | null;
     data_points: string[];
+    conversationId: string;
     error?: string;
 };
 
@@ -46,4 +47,5 @@ export type ChatRequest = {
     approach: Approaches;
     overrides?: AskRequestOverrides;
     shouldStream?: boolean;
+    conversationId: string;
 };

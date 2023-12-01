@@ -15,10 +15,10 @@ export const AnswerLoading = () => {
             <Stack className={styles.answerContainer} verticalAlign="space-between">
                 <AnswerIcon />
                 <Stack.Item grow>
-                    <p className={styles.answerText}>
-                        Generating answer
+                    <div className={styles.answerText}>
+                        I'm thinking
                         <span className={styles.loadingdots} />
-                    </p>
+                    </div>
                 </Stack.Item>
             </Stack>
         </animated.div>

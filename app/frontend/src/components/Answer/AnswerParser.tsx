@@ -4,22 +4,12 @@ import { getCitationFilePath } from "../../api";
 type HtmlParsedAnswer = {
     answerHtml: string;
     citations: string[];
-    followupQuestions: string[];
 };
 
-export function parseAnswerToHtml(answer: string, onCitationClicked: (citationFilePath: string) => void): HtmlParsedAnswer {
+export function parseAnswerToHtml(answer: string): HtmlParsedAnswer {
+
     const citations: string[] = [];
-    const followupQuestions: string[] = [];
-
-    // Extract any follow-up questions that might be in the answer
-    let parsedAnswer = answer.replace(/<<([^>>]+)>>/g, (match, content) => {
-        followupQuestions.push(content);
-        return "";
-    });
-
-    // trim any whitespace from the end of the answer after removing follow-up questions
-    parsedAnswer = parsedAnswer.trim();
-
+    let parsedAnswer = answer.trim();
     const parts = parsedAnswer.split(/\[([^\]]+)\]/g);
 
     const fragments: string[] = parts.map((part, index) => {
@@ -46,7 +36,6 @@ export function parseAnswerToHtml(answer: string, onCitationClicked: (citationFi
 
     return {
         answerHtml: fragments.join(""),
-        citations,
-        followupQuestions
+        citations
     };
 }

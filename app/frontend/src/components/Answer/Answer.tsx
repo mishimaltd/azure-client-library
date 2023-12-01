@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Stack, IconButton } from "@fluentui/react";
 import DOMPurify from "dompurify";
+import { ThumbDislike20Regular, ThumbLike20Regular} from "@fluentui/react-icons";
 
 import styles from "./Answer.module.css";
 
@@ -10,49 +11,30 @@ import { AnswerIcon } from "./AnswerIcon";
 
 interface Props {
     answer: AskResponse;
-    isSelected?: boolean;
-    onCitationClicked: (filePath: string) => void;
-    onThoughtProcessClicked: () => void;
-    onSupportingContentClicked: () => void;
-    onFollowupQuestionClicked?: (question: string) => void;
-    showFollowupQuestions?: boolean;
 }
 
-export const Answer = ({
-    answer,
-    isSelected,
-    onCitationClicked,
-    onThoughtProcessClicked,
-    onSupportingContentClicked,
-    onFollowupQuestionClicked,
-    showFollowupQuestions
-}: Props) => {
-    const parsedAnswer = useMemo(() => parseAnswerToHtml(answer.answer, onCitationClicked), [answer]);
-
+export const Answer = ({ answer}: Props) => {
+    
+    const parsedAnswer = useMemo(() => parseAnswerToHtml(answer.answer), [answer]);
     const sanitizedAnswerHtml = DOMPurify.sanitize(parsedAnswer.answerHtml);
 
+    // Copies answer text to clipboard
+    const copyToClipboard = (content: string) => {
+        navigator.clipboard.writeText(content).then(() => {
+            console.log('Content copied to clipboard');
+        },() => {
+            console.error('Failed to copy');
+        });
+    };
+
     return (
-        <Stack className={`${styles.answerContainer} ${isSelected && styles.selected}`} verticalAlign="space-between">
+        <Stack className={`${styles.answerContainer}`} verticalAlign="space-between">
             <Stack.Item>
                 <Stack horizontal horizontalAlign="space-between">
                     <AnswerIcon />
                     <div>
-                        <IconButton
-                            style={{ color: "black" }}
-                            iconProps={{ iconName: "Lightbulb" }}
-                            title="Show thought process"
-                            ariaLabel="Show thought process"
-                            onClick={() => onThoughtProcessClicked()}
-                            disabled={!answer.thoughts}
-                        />
-                        <IconButton
-                            style={{ color: "black" }}
-                            iconProps={{ iconName: "ClipboardList" }}
-                            title="Show supporting content"
-                            ariaLabel="Show supporting content"
-                            onClick={() => onSupportingContentClicked()}
-                            disabled={!answer.data_points.length}
-                        />
+                        <ThumbLike20Regular primaryFill={"rgba(115, 118, 225, 1)"} aria-hidden="true" aria-label="Answer logo"/>
+                        <ThumbDislike20Regular primaryFill={"rgba(115, 118, 225, 1)"} aria-hidden="true" aria-label="Answer logo" />
                     </div>
                 </Stack>
             </Stack.Item>
@@ -70,21 +52,6 @@ export const Answer = ({
                             return (
                                 <a key={i} className={styles.citation} title={x} onClick={() => onCitationClicked(path)}>
                                     {`${++i}. ${x}`}
-                                </a>
-                            );
-                        })}
-                    </Stack>
-                </Stack.Item>
-            )}
-
-            {!!parsedAnswer.followupQuestions.length && showFollowupQuestions && onFollowupQuestionClicked && (
-                <Stack.Item>
-                    <Stack horizontal wrap className={`${!!parsedAnswer.citations.length ? styles.followupQuestionsList : ""}`} tokens={{ childrenGap: 6 }}>
-                        <span className={styles.followupQuestionLearnMore}>Follow-up questions:</span>
-                        {parsedAnswer.followupQuestions.map((x, i) => {
-                            return (
-                                <a key={i} className={styles.followupQuestion} title={x} onClick={() => onFollowupQuestionClicked(x)}>
-                                    {`${x}`}
                                 </a>
                             );
                         })}
